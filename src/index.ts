@@ -13,7 +13,7 @@ export async function runDailySearch(): Promise<void> {
     const config = loadConfig();
     const appConfig = loadAppConfig();
 
-    const tenderService = new TenderService(appConfig.apiBase);
+    const tenderService = new TenderService(appConfig.apiBase, config.maxPages);
     const filterService = new FilterService(config);
     const email = new EmailService(appConfig);
 

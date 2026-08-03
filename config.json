@@ -12,5 +12,6 @@
     "contractingAuthorities": [],
     "statuses": [],
     "since": null,
+    "maxPages": 20,
     "sendEmailIfEmpty": true
 }

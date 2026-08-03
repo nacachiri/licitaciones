@@ -173,9 +173,10 @@ function mapEntry(entry: Obj): Tender | null {
 }
 
 export class TenderService {
-  private readonly maxPages = 20;
-
-  constructor(private readonly apiBase: string) {}
+  constructor(
+    private readonly apiBase: string,
+    private readonly maxPages: number = 20,
+  ) {}
 
   async fetchTenders(): Promise<Tender[]> {
     const tenders: Tender[] = [];

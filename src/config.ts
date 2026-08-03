@@ -29,6 +29,7 @@ export interface Config {
   contractingAuthorities: string[];
   statuses: string[];
   since: string | null;
+  maxPages: number;
   sendEmailIfEmpty: boolean;
 }
 
@@ -62,6 +63,7 @@ export function loadConfig(): Config {
       contractingAuthorities: parsed.contractingAuthorities ?? [],
       statuses: parsed.statuses ?? [],
       since: parsed.since ?? null,
+      maxPages: parsed.maxPages ?? 20,
       sendEmailIfEmpty: parsed.sendEmailIfEmpty ?? true,
     };
   } catch (error) {
