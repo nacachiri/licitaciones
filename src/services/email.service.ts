@@ -28,37 +28,39 @@ function rowTemplate(tender: Tender): string {
 
   return `
   <tr>
-    <td style="padding:12px 10px;border-bottom:1px solid #e4e7eb;font-size:13px;color:#102a43;"><a href="${tender.url}" style="color:#1f6feb;text-decoration:none;font-weight:600;">${escapeHtml(tender.title)}</a></td>
-    <td style="padding:12px 10px;border-bottom:1px solid #e4e7eb;font-size:13px;color:#52606d;">${escapeHtml(tender.agency)}</td>
-    <td style="padding:12px 10px;border-bottom:1px solid #e4e7eb;font-size:12px;color:#7b8794;white-space:nowrap;">${escapeHtml(cpv)}</td>
-    <td style="padding:12px 10px;border-bottom:1px solid #e4e7eb;font-size:13px;color:#102a43;white-space:nowrap;">${formatBudget(tender.budget)}</td>
-    <td style="padding:12px 10px;border-bottom:1px solid #e4e7eb;font-size:13px;color:#52606d;white-space:nowrap;">${escapeHtml(deadline)}</td>
-    <td style="padding:12px 10px;border-bottom:1px solid #e4e7eb;font-size:13px;text-align:center;"><a href="${tender.url}" style="color:#1f6feb;text-decoration:none;font-weight:600;">Ver →</a></td>
+    <td style="padding:10px 8px;border-bottom:1px solid #e4e7eb;font-size:13px;color:#102a43;line-height:1.4;"><a href="${tender.url}" style="color:#1f6feb;text-decoration:none;font-weight:600;">${escapeHtml(tender.title)}</a></td>
+    <td style="padding:10px 8px;border-bottom:1px solid #e4e7eb;font-size:12px;color:#52606d;line-height:1.4;">${escapeHtml(tender.agency)}</td>
+    <td style="padding:10px 8px;border-bottom:1px solid #e4e7eb;font-size:12px;color:#7b8794;white-space:nowrap;line-height:1.4;">${escapeHtml(cpv)}</td>
+    <td align="right" style="padding:10px 8px;border-bottom:1px solid #e4e7eb;font-size:13px;color:#102a43;white-space:nowrap;line-height:1.4;">${formatBudget(tender.budget)}</td>
+    <td style="padding:10px 8px;border-bottom:1px solid #e4e7eb;font-size:13px;color:#52606d;white-space:nowrap;line-height:1.4;">${escapeHtml(deadline)}</td>
+    <td align="center" style="padding:10px 8px;border-bottom:1px solid #e4e7eb;font-size:13px;line-height:1.4;"><a href="${tender.url}" style="color:#1f6feb;text-decoration:none;font-weight:600;white-space:nowrap;">Ver →</a></td>
   </tr>`;
 }
 
 function rowsHtml(tenders: Tender[]): string {
   if (tenders.length === 0) {
     return `
-    <div style="padding:20px;background-color:#f8fafc;border:1px solid #e4e7eb;border-radius:8px;font-size:14px;color:#52606d;">
+    <div style="padding:16px 20px;background-color:#f8fafc;border:1px solid #e4e7eb;border-radius:8px;font-size:14px;color:#52606d;line-height:1.5;">
       No se ha encontrado ninguna licitación nueva que cumpla los filtros configurados.
     </div>`;
   }
 
   const header = `
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="width:100%;border-collapse:collapse;">
-    <thead>
-      <tr style="background-color:#f0f4f8;">
-        <th align="left" style="padding:10px;font-size:12px;text-transform:uppercase;color:#52606d;">Título</th>
-        <th align="left" style="padding:10px;font-size:12px;text-transform:uppercase;color:#52606d;">Organismo</th>
-        <th align="left" style="padding:10px;font-size:12px;text-transform:uppercase;color:#52606d;">CPV</th>
-        <th align="right" style="padding:10px;font-size:12px;text-transform:uppercase;color:#52606d;">Importe</th>
-        <th align="left" style="padding:10px;font-size:12px;text-transform:uppercase;color:#52606d;">Fecha límite</th>
-        <th style="padding:10px;font-size:12px;text-transform:uppercase;color:#52606d;">Enlace</th>
-      </tr>
-    </thead>
-    <tbody>${tenders.map(rowTemplate).join("")}</tbody>
-  </table>`;
+  <div style="overflow-x:auto;width:100%;">
+    <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="width:100%;min-width:560px;border-collapse:collapse;">
+      <thead>
+        <tr style="background-color:#f0f4f8;">
+          <th align="left" style="padding:8px;font-size:11px;text-transform:uppercase;letter-spacing:0.5px;color:#52606d;line-height:1.3;">Título</th>
+          <th align="left" style="padding:8px;font-size:11px;text-transform:uppercase;letter-spacing:0.5px;color:#52606d;line-height:1.3;">Organismo</th>
+          <th align="left" style="padding:8px;font-size:11px;text-transform:uppercase;letter-spacing:0.5px;color:#52606d;line-height:1.3;">CPV</th>
+          <th align="right" style="padding:8px;font-size:11px;text-transform:uppercase;letter-spacing:0.5px;color:#52606d;line-height:1.3;">Importe</th>
+          <th align="left" style="padding:8px;font-size:11px;text-transform:uppercase;letter-spacing:0.5px;color:#52606d;line-height:1.3;">Límite</th>
+          <th align="center" style="padding:8px;font-size:11px;text-transform:uppercase;letter-spacing:0.5px;color:#52606d;line-height:1.3;">Enlace</th>
+        </tr>
+      </thead>
+      <tbody>${tenders.map(rowTemplate).join("")}</tbody>
+    </table>
+  </div>`;
 
   return header;
 }

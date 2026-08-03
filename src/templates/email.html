@@ -3,31 +3,41 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>TenderWatch</title>
+  <style>
+    @media only screen and (max-width: 600px) {
+      table[class="tw-container"] { width: 100% !important; }
+      td[class="tw-body"] { padding: 20px 16px !important; }
+      td[class="tw-header"] { padding: 16px 16px !important; }
+      td[class="tw-footer"] { padding: 14px 16px !important; }
+      h1[class="tw-brand"] { font-size: 18px !important; }
+      h2[class="tw-summary"] { font-size: 26px !important; }
+    }
+  </style>
 </head>
-<body style="margin:0;padding:0;background-color:#f4f6f8;font-family:Helvetica,Arial,sans-serif;color:#1f2933;">
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#f4f6f8;padding:24px 0;">
+<body style="margin:0;padding:0;background-color:#f4f6f8;font-family:Helvetica,Arial,sans-serif;color:#1f2933;-webkit-text-size-adjust:100%;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#f4f6f8;padding:16px 0;">
     <tr>
       <td align="center">
-        <table role="presentation" width="640" cellpadding="0" cellspacing="0" style="max-width:640px;width:100%;background-color:#ffffff;border-radius:10px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.08);">
+        <table role="presentation" cellpadding="0" cellspacing="0" border="0" class="tw-container" style="width:600px;max-width:100%;background-color:#ffffff;border-radius:10px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.08);">
           <tr>
-            <td style="background-color:#1f6feb;padding:20px 28px;">
-              <h1 style="margin:0;color:#ffffff;font-size:20px;font-weight:700;">TenderWatch</h1>
-              <p style="margin:4px 0 0;color:#d6e4ff;font-size:13px;">Licitaciones de la Plataforma de Contratación del Sector Público</p>
+            <td class="tw-header" style="background-color:#1f6feb;padding:16px 24px;line-height:1.3;mso-line-height-rule:exactly;">
+              <h1 class="tw-brand" style="margin:0;color:#ffffff;font-size:18px;font-weight:700;line-height:1.2;mso-line-height-rule:exactly;">TenderWatch</h1>
+              <p style="margin:2px 0 0;color:#d6e4ff;font-size:12px;line-height:1.3;">Licitaciones de la Plataforma de Contratación del Sector Público</p>
             </td>
           </tr>
           <tr>
-            <td style="padding:24px 28px;">
-              <p style="margin:0 0 6px;font-size:14px;color:#52606d;">Resumen del día</p>
-              <h2 style="margin:0 0 20px;font-size:24px;color:#102a43;">{{COUNT}} licitación(es) encontrada(s)</h2>
-              <p style="margin:0 0 20px;font-size:13px;color:#7b8794;">Fecha de consulta: {{DATE}}</p>
+            <td class="tw-body" style="padding:24px;">
+              <p style="margin:0 0 4px;font-size:12px;text-transform:uppercase;letter-spacing:0.5px;color:#52606d;line-height:1.3;">Resumen del día · {{DATE}}</p>
+              <h2 class="tw-summary" style="margin:0 0 16px;font-size:28px;font-weight:700;color:#102a43;line-height:1.2;mso-line-height-rule:exactly;">{{COUNT}} licitación(es)</h2>
 
               {{ROWS}}
             </td>
           </tr>
           <tr>
-            <td style="padding:16px 28px;background-color:#f8fafc;border-top:1px solid #e4e7eb;">
-              <p style="margin:0;font-size:12px;color:#7b8794;">Generado automáticamente por TenderWatch.</p>
+            <td class="tw-footer" style="padding:14px 24px;background-color:#f8fafc;border-top:1px solid #e4e7eb;">
+              <p style="margin:0;font-size:12px;color:#7b8794;line-height:1.4;">Generado automáticamente por TenderWatch.</p>
             </td>
           </tr>
         </table>
