@@ -1,9 +1,8 @@
 import cron from "node-cron";
-import { loadAppConfig, loadConfig, type Tender } from "./config.js";
+import { loadAppConfig, loadConfig } from "./config.js";
 import { logger } from "./utils/logger.js";
 import { TenderService } from "./services/tender.service.js";
 import { FilterService } from "./services/filter.service.js";
-import { StorageService } from "./services/storage.service.js";
 import { EmailService } from "./services/email.service.js";
 
 export async function runDailySearch(): Promise<void> {
@@ -16,7 +15,6 @@ export async function runDailySearch(): Promise<void> {
 
     const tenderService = new TenderService(appConfig.apiBase);
     const filterService = new FilterService(config);
-    const storage = new StorageService("seen_tenders.json");
     const email = new EmailService(appConfig);
 
     const downloaded = await tenderService.fetchTenders();
@@ -25,14 +23,8 @@ export async function runDailySearch(): Promise<void> {
     const filtered = filterService.apply(downloaded);
     logger.info(`Licitaciones tras filtros: ${filtered.length}`);
 
-    const seen = storage.loadProcessed();
-    const fresh = filtered.filter((tender) => !seen.has(tender.id));
-    logger.info(`Licitaciones nuevas (no enviadas antes): ${fresh.length}`);
-
-    await email.send(fresh, config.sendEmailIfEmpty);
-
-    storage.addProcessed(fresh.map((tender: Tender) => tender.id));
-    logger.info(`Licitaciones enviadas/marcadas: ${fresh.length}`);
+    await email.send(filtered, config.sendEmailIfEmpty);
+    logger.info(`Licitaciones enviadas: ${filtered.length}`);
   } catch (error) {
     logger.error(`Error en la búsqueda diaria: ${(error as Error).message}`);
   } finally {

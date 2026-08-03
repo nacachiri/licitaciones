@@ -6,9 +6,10 @@ Aplicación sencilla en **Node.js + TypeScript** que cada mañana consulta las l
 
 1. Cada día a las **08:00** (configurable) se consulta el feed oficial de datos abiertos de la Plataforma de Contratación del Sector Público (formato Atom/CODICE, sin scraping).
 2. Las licitaciones se filtran según `config.json`.
-3. Se descartan las licitaciones ya enviadas (registradas en `seen_tenders.json`).
-4. Se genera un correo HTML limpio y se envía con Nodemailer.
-5. Se registra todo en un log diario dentro de `logs/`.
+3. Se genera un correo HTML limpio y se envía con Nodemailer.
+4. Se registra todo en un log diario dentro de `logs/`.
+
+> Nota: cada ejecución envía **todas** las licitaciones que cumplen los filtros, aunque ya se hubieran enviado en días anteriores. No hay deduplicación.
 
 ## Requisitos
 
@@ -72,11 +73,9 @@ npm start
 
 ## Persistencia
 
-- `seen_tenders.json`: IDs de las licitaciones ya enviadas. Se crea automáticamente.
 - `logs/AAAAAMMDD.log`: registro diario con inicio, fin, descargadas, filtradas, enviadas y errores.
 
 ## Notas
 
 - Solo se procesan licitaciones con estado **publicada**.
 - La fuente oficial es: `https://contrataciondelsectorpublico.gob.es/sindicacion/sindicacion_643/licitacionesPerfilesContratanteCompleto3.atom`
-- Si una licitación se modifica, la Plataforma genera un nuevo registro y TenderWatch la volverá a notificar.
