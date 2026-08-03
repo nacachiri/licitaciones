@@ -1,5 +1,7 @@
 import type { Config, Tender } from "../config.js";
 
+const DEFAULT_STATUS = "PUB";
+
 function matchesAny(list: string[], value: string): boolean {
   const needle = value.toLocaleLowerCase();
   return list.some((item) => needle.includes(item.toLocaleLowerCase()));
@@ -27,6 +29,17 @@ function matchesLocation(list: string[], values: string[]): boolean {
   );
 }
 
+function matchesStatus(tender: Tender, statuses: string[]): boolean {
+  if (statuses.length === 0) return tender.status === DEFAULT_STATUS;
+  return statuses.some((s) => tender.status?.toUpperCase() === s.toUpperCase());
+}
+
+function matchesSince(tender: Tender, since: string | null): boolean {
+  if (!since) return true;
+  if (!tender.publishedAt) return false;
+  return tender.publishedAt >= since;
+}
+
 export class FilterService {
   constructor(private readonly config: Config) {}
 
@@ -36,6 +49,8 @@ export class FilterService {
     return tenders.filter((tender) => {
       const title = tender.title ?? "";
 
+      if (!matchesStatus(tender, config.statuses)) return false;
+      if (!matchesSince(tender, config.since)) return false;
       if (config.keywords.length > 0 && !matchesAny(config.keywords, title)) return false;
       if (matchesAny(config.excludeKeywords, title)) return false;
       if (!matchesCpv(config.cpv, tender.cpv)) return false;

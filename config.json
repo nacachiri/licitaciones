@@ -10,5 +10,7 @@
     "provinces": [],
     "contractTypes": [],
     "contractingAuthorities": [],
+    "statuses": [],
+    "since": null,
     "sendEmailIfEmpty": true
 }

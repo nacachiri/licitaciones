@@ -9,6 +9,7 @@ export interface Tender {
   agency: string;
   cpv: string[];
   budget: number | null;
+  estimatedAmount: number | null;
   deadline: string | null;
   locations: string[];
   status: string | null;
@@ -26,6 +27,8 @@ export interface Config {
   provinces: string[];
   contractTypes: string[];
   contractingAuthorities: string[];
+  statuses: string[];
+  since: string | null;
   sendEmailIfEmpty: boolean;
 }
 
@@ -57,6 +60,8 @@ export function loadConfig(): Config {
       provinces: parsed.provinces ?? [],
       contractTypes: parsed.contractTypes ?? [],
       contractingAuthorities: parsed.contractingAuthorities ?? [],
+      statuses: parsed.statuses ?? [],
+      since: parsed.since ?? null,
       sendEmailIfEmpty: parsed.sendEmailIfEmpty ?? true,
     };
   } catch (error) {

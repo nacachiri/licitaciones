@@ -53,6 +53,8 @@ Todos los filtros son **opcionales**: si una lista está vacía, ese filtro no s
 | `provinces`              | Provincias (coincidencia parcial, p. ej. `"Burgos"`).              |
 | `contractTypes`          | Código de tipo de contrato tal y como aparece en el feed.          |
 | `contractingAuthorities` | Organismos contratantes (coincidencia parcial en el nombre).       |
+| `statuses`               | Estados del expediente (p. ej. `["PUB"]`). Vacío = solo publicadas. |
+| `since`                  | Fecha ISO desde la que mostrar licitaciones (p. ej. `"2026-01-01"`) o `null`. |
 | `sendEmailIfEmpty`       | Si es `true`, se envía un correo aunque no haya licitaciones nuevas. |
 
 ## Uso
@@ -77,5 +79,5 @@ npm start
 
 ## Notas
 
-- Solo se procesan licitaciones con estado **publicada**.
+- Se recorren todas las páginas del feed (hasta 20 páginas ≈ 10.000 entradas) para cubrir la mayor cantidad de expedientes.
 - La fuente oficial es: `https://contrataciondelsectorpublico.gob.es/sindicacion/sindicacion_643/licitacionesPerfilesContratanteCompleto3.atom`

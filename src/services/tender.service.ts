@@ -2,12 +2,9 @@ import axios from "axios";
 import { XMLParser } from "fast-xml-parser";
 import type { Tender } from "../config.js";
 
-const PUBLISHED_STATUS = "PUB";
-
 const parser: XMLParser = new XMLParser({
   ignoreAttributes: false,
   removeNSPrefix: true,
-  // Forzar arrays en estos nodos para simplificar la normalización.
   isArray: (tag, _jpath, _isLeaf) => ["entry", "link", "RequiredCommodityClassification"].includes(tag),
 });
 
@@ -96,6 +93,17 @@ function extractBudget(procurement: Obj | undefined): number | null {
   return Number.isFinite(value) ? value : null;
 }
 
+function extractEstimatedAmount(procurement: Obj | undefined): number | null {
+  const budget = first(procurement?.["BudgetAmount"]);
+  if (!budget) return null;
+  const raw = textContent(budget["EstimatedOverallContractAmount"])
+    ?? textContent(budget["TotalAmount"])
+    ?? textContent(budget["TaxExclusiveAmount"]);
+  if (raw === undefined) return null;
+  const value = Number(String(raw).replace(",", "."));
+  return Number.isFinite(value) ? value : null;
+}
+
 function entryUrl(entry: Obj): string {
   const links = asArray(entry["link"]);
   for (const link of links) {
@@ -121,7 +129,6 @@ function mapEntry(entry: Obj): Tender | null {
   if (!folderStatus) return null;
 
   const status = textContent(folderStatus["ContractFolderStatusCode"]);
-  if (status !== PUBLISHED_STATUS) return null;
 
   const idRaw = textContent(entry["id"]);
   const id = idRaw?.split("/").pop() ?? null;
@@ -156,25 +163,23 @@ function mapEntry(entry: Obj): Tender | null {
     agency: partyDisplayName(located) ?? "",
     cpv: extractCpv(procurement),
     budget: extractBudget(procurement),
+    estimatedAmount: extractEstimatedAmount(procurement),
     deadline,
     locations,
-    status,
+    status: status ?? null,
     contractType: textContent(procurement?.["TypeCode"]) ?? null,
     publishedAt,
   };
 }
 
 export class TenderService {
-  private readonly maxPages = 10;
-  /** Solo se siguen páginas con entradas más recientes que este umbral. */
-  private readonly recentWindowMs = 2 * 24 * 60 * 60 * 1000;
+  private readonly maxPages = 20;
 
   constructor(private readonly apiBase: string) {}
 
   async fetchTenders(): Promise<Tender[]> {
     const tenders: Tender[] = [];
     const seenPages = new Set<string>();
-    const cutoff = Date.now() - this.recentWindowMs;
 
     let url: string | undefined = this.apiBase;
     let pages = 0;
@@ -193,12 +198,6 @@ export class TenderService {
         if (tender) tenders.push(tender);
       }
 
-      const newestUpdated = entries
-        .map((e) => new Date(String(e["updated"] ?? "")).getTime())
-        .filter((t) => !Number.isNaN(t))
-        .reduce((max, t) => Math.max(max, t), 0);
-
-      if (newestUpdated > 0 && newestUpdated < cutoff) break;
       url = nextLink(feed);
       pages += 1;
     }
