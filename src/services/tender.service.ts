@@ -168,6 +168,7 @@ function mapEntry(entry: Obj): Tender | null {
     locations,
     status: status ?? null,
     contractType: textContent(procurement?.["TypeCode"]) ?? null,
+    procedureType: textContent(tenderingProcess?.["ProcedureCode"]) ?? null,
     publishedAt,
   };
 }

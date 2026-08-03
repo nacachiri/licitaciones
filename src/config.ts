@@ -14,6 +14,7 @@ export interface Tender {
   locations: string[];
   status: string | null;
   contractType: string | null;
+  procedureType: string | null;
   publishedAt: string | null;
 }
 
@@ -26,6 +27,7 @@ export interface Config {
   regions: string[];
   provinces: string[];
   contractTypes: string[];
+  procedureTypes: string[];
   contractingAuthorities: string[];
   statuses: string[];
   since: string | null;
@@ -60,6 +62,7 @@ export function loadConfig(): Config {
       regions: parsed.regions ?? [],
       provinces: parsed.provinces ?? [],
       contractTypes: parsed.contractTypes ?? [],
+      procedureTypes: parsed.procedureTypes ?? [],
       contractingAuthorities: parsed.contractingAuthorities ?? [],
       statuses: parsed.statuses ?? [],
       since: parsed.since ?? null,

@@ -22,11 +22,14 @@
         "retermalización"
     ],
     "excludeKeywords": [],
-    "minimumBudget": 0,
+    "minimumBudget": 100000,
     "maximumBudget": null,
     "regions": [],
     "provinces": [],
     "contractTypes": [],
+    "procedureTypes": [
+        "Avierto"
+    ],
     "contractingAuthorities": [],
     "statuses": [],
     "since": null,

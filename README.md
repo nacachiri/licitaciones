@@ -52,6 +52,7 @@ Todos los filtros son **opcionales**: si una lista está vacía, ese filtro no s
 | `regions`                | Comunidades autónomas (coincidencia parcial, p. ej. `"Castilla"`). |
 | `provinces`              | Provincias (coincidencia parcial, p. ej. `"Burgos"`).              |
 | `contractTypes`          | Código de tipo de contrato tal y como aparece en el feed.          |
+| `procedureTypes`         | Tipos de procedimiento: nombre (p. ej. `"Abierto"`, `"Abierto simplificado"`) o código (p. ej. `"1"`, `"9"`). |
 | `contractingAuthorities` | Organismos contratantes (coincidencia parcial en el nombre).       |
 | `statuses`               | Estados del expediente (p. ej. `["PUB"]`). Vacío = solo publicadas. |
 | `since`                  | Fecha ISO desde la que mostrar licitaciones (p. ej. `"2026-01-01"`) o `null`. |
