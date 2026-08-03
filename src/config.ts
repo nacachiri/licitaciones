@@ -41,7 +41,7 @@ export interface AppConfig {
   smtpUser: string;
   smtpPass: string;
   emailFrom: string;
-  emailTo: string;
+  emailTo: string[];
 }
 
 export const CONFIG_PATH = "config.json";
@@ -81,6 +81,9 @@ export function loadAppConfig(): AppConfig {
     smtpUser: process.env.SMTP_USER ?? "",
     smtpPass: process.env.SMTP_PASS ?? "",
     emailFrom: process.env.EMAIL_FROM ?? "",
-    emailTo: process.env.EMAIL_TO ?? "",
+    emailTo: (process.env.EMAIL_TO ?? "")
+      .split(",")
+      .map((e) => e.trim())
+      .filter(Boolean),
   };
 }

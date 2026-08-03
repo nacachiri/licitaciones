@@ -81,7 +81,7 @@ export class EmailService {
   async send(tenders: Tender[], includeEmpty: boolean): Promise<void> {
     if (tenders.length === 0 && !includeEmpty) return;
 
-    if (!this.appConfig.smtpHost || !this.appConfig.emailTo) {
+    if (!this.appConfig.smtpHost || this.appConfig.emailTo.length === 0) {
       logger.warn("Configuración SMTP incompleta (SMTP_HOST o EMAIL_TO). Correo no enviado.");
       return;
     }
