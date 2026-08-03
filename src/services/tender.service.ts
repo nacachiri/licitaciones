@@ -201,6 +201,8 @@ export class TenderService {
 
       url = nextLink(feed);
       pages += 1;
+
+      if (url) await this.delay(500);
     }
 
     return tenders;
@@ -209,9 +211,14 @@ export class TenderService {
   private async fetchPage(url: string): Promise<string> {
     const response = await axios.get<string>(url, {
       responseType: "text",
-      timeout: 120000,
+      timeout: 180000,
+      maxContentLength: 50 * 1024 * 1024,
       headers: { Accept: "application/atom+xml" },
     });
     return response.data;
+  }
+
+  private delay(ms: number): Promise<void> {
+    return new Promise((resolve) => setTimeout(resolve, ms));
   }
 }
