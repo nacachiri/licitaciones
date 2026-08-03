@@ -173,8 +173,6 @@ function mapEntry(entry: Obj): Tender | null {
 }
 
 export class TenderService {
-  private readonly maxPages = 20;
-
   constructor(private readonly apiBase: string) {}
 
   async fetchTenders(): Promise<Tender[]> {
@@ -182,9 +180,8 @@ export class TenderService {
     const seenPages = new Set<string>();
 
     let url: string | undefined = this.apiBase;
-    let pages = 0;
 
-    while (url && pages < this.maxPages) {
+    while (url) {
       if (seenPages.has(url)) break;
       seenPages.add(url);
 
@@ -199,7 +196,6 @@ export class TenderService {
       }
 
       url = nextLink(feed);
-      pages += 1;
     }
 
     return tenders;
