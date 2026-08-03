@@ -45,7 +45,7 @@ export interface AppConfig {
   emailTo: string[];
 }
 
-export const CONFIG_PATH = "config.json";
+export const CONFIG_PATH = process.env.CONFIG_FILE ?? "config.json";
 
 export function loadConfig(): Config {
   try {
