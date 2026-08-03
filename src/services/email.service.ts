@@ -48,7 +48,12 @@ function cardTemplate(tender: Tender): string {
     </tr>
     <tr>
       <td style="padding:0 16px 12px;font-size:12px;color:#7b8794;line-height:1.4;">
-        CPV ${escapeHtml(cpv)} &middot; Presupuesto ${escapeHtml(importe)} &middot; Valor estimado ${escapeHtml(estimated)}
+        CPV ${escapeHtml(cpv)} &middot; L&iacute;mite ${escapeHtml(deadline)}
+      </td>
+    </tr>
+    <tr>
+      <td style="padding:0 16px 12px;font-size:12px;color:#7b8794;line-height:1.4;">
+        Presupuesto ${escapeHtml(importe)} &middot; Valor estimado ${escapeHtml(estimated)}
       </td>
     </tr>
     <tr>
