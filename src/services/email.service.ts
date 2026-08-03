@@ -22,47 +22,49 @@ function formatBudget(value: number | null): string {
   }).format(value);
 }
 
-function rowTemplate(tender: Tender): string {
+function formatDeadline(deadline: string): string {
+  const d = new Date(deadline);
+  if (Number.isNaN(d.getTime())) return deadline;
+  return d.toLocaleDateString("es-ES", { day: "numeric", month: "short", year: "numeric" });
+}
+
+function cardTemplate(tender: Tender): string {
   const cpv = tender.cpv.length > 0 ? tender.cpv.join(", ") : "—";
-  const deadline = tender.deadline ?? "—";
+  const deadline = tender.deadline ? formatDeadline(tender.deadline) : "—";
+  const importe = formatBudget(tender.budget);
 
   return `
-  <tr>
-    <td style="padding:10px 8px;border-bottom:1px solid #e4e7eb;font-size:13px;color:#102a43;line-height:1.4;"><a href="${tender.url}" style="color:#1f6feb;text-decoration:none;font-weight:600;">${escapeHtml(tender.title)}</a></td>
-    <td style="padding:10px 8px;border-bottom:1px solid #e4e7eb;font-size:12px;color:#52606d;line-height:1.4;">${escapeHtml(tender.agency)}</td>
-    <td style="padding:10px 8px;border-bottom:1px solid #e4e7eb;font-size:12px;color:#7b8794;white-space:nowrap;line-height:1.4;">${escapeHtml(cpv)}</td>
-    <td align="right" style="padding:10px 8px;border-bottom:1px solid #e4e7eb;font-size:13px;color:#102a43;white-space:nowrap;line-height:1.4;">${formatBudget(tender.budget)}</td>
-    <td style="padding:10px 8px;border-bottom:1px solid #e4e7eb;font-size:13px;color:#52606d;white-space:nowrap;line-height:1.4;">${escapeHtml(deadline)}</td>
-    <td align="center" style="padding:10px 8px;border-bottom:1px solid #e4e7eb;font-size:13px;line-height:1.4;"><a href="${tender.url}" style="color:#1f6feb;text-decoration:none;font-weight:600;white-space:nowrap;">Ver →</a></td>
-  </tr>`;
+  <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="width:100%;margin-bottom:12px;background-color:#ffffff;border:1px solid #e4e7eb;border-radius:8px;overflow:hidden;">
+    <tr>
+      <td style="padding:14px 16px 10px;font-size:14px;line-height:1.4;">
+        <a href="${tender.url}" style="color:#1f6feb;text-decoration:none;font-weight:600;">${escapeHtml(tender.title)}</a>
+      </td>
+    </tr>
+    <tr>
+      <td style="padding:0 16px 10px;font-size:12px;color:#52606d;line-height:1.4;">${escapeHtml(tender.agency)}</td>
+    </tr>
+    <tr>
+      <td style="padding:0 16px 12px;font-size:12px;color:#7b8794;line-height:1.4;">
+        CPV ${escapeHtml(cpv)} &middot; ${escapeHtml(importe)} &middot; ${escapeHtml(deadline)}
+      </td>
+    </tr>
+    <tr>
+      <td style="padding:0 16px 14px;">
+        <a href="${tender.url}" style="display:inline-block;background-color:#1f6feb;color:#ffffff;padding:8px 14px;border-radius:6px;font-size:12px;font-weight:600;text-decoration:none;">Ver licitacion &rarr;</a>
+      </td>
+    </tr>
+  </table>`;
 }
 
 function rowsHtml(tenders: Tender[]): string {
   if (tenders.length === 0) {
     return `
     <div style="padding:16px 20px;background-color:#f8fafc;border:1px solid #e4e7eb;border-radius:8px;font-size:14px;color:#52606d;line-height:1.5;">
-      No se ha encontrado ninguna licitación nueva que cumpla los filtros configurados.
+      No se ha encontrado ninguna licitacion nueva que cumpla los filtros configurados.
     </div>`;
   }
 
-  const header = `
-  <div style="overflow-x:auto;width:100%;">
-    <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="width:100%;min-width:560px;border-collapse:collapse;">
-      <thead>
-        <tr style="background-color:#f0f4f8;">
-          <th align="left" style="padding:8px;font-size:11px;text-transform:uppercase;letter-spacing:0.5px;color:#52606d;line-height:1.3;">Título</th>
-          <th align="left" style="padding:8px;font-size:11px;text-transform:uppercase;letter-spacing:0.5px;color:#52606d;line-height:1.3;">Organismo</th>
-          <th align="left" style="padding:8px;font-size:11px;text-transform:uppercase;letter-spacing:0.5px;color:#52606d;line-height:1.3;">CPV</th>
-          <th align="right" style="padding:8px;font-size:11px;text-transform:uppercase;letter-spacing:0.5px;color:#52606d;line-height:1.3;">Importe</th>
-          <th align="left" style="padding:8px;font-size:11px;text-transform:uppercase;letter-spacing:0.5px;color:#52606d;line-height:1.3;">Límite</th>
-          <th align="center" style="padding:8px;font-size:11px;text-transform:uppercase;letter-spacing:0.5px;color:#52606d;line-height:1.3;">Enlace</th>
-        </tr>
-      </thead>
-      <tbody>${tenders.map(rowTemplate).join("")}</tbody>
-    </table>
-  </div>`;
-
-  return header;
+  return tenders.map(cardTemplate).join("");
 }
 
 export class EmailService {
