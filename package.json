@@ -1,5 +1,5 @@
 {
-  "name": "tenderwatch",
+  "name": "licitaciones",
   "version": "1.0.0",
   "description": "Busca y notifica por correo las licitaciones nuevas de la Plataforma de Contratación del Sector Público.",
   "private": true,

@@ -80,8 +80,8 @@ export class EmailService {
 
     const html = this.render(tenders);
     const subject = tenders.length > 0
-      ? `TenderWatch: ${tenders.length} licitación(es) nuevas`
-      : "TenderWatch: sin licitaciones nuevas hoy";
+      ? `Licitaciones: ${tenders.length} licitación(es) nuevas`
+      : "Licitaciones: sin licitaciones nuevas hoy";
 
     const transporter = nodemailer.createTransport({
       host: this.appConfig.smtpHost,

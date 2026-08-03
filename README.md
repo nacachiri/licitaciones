@@ -1,4 +1,4 @@
-# TenderWatch
+# Licitaciones
 
 Aplicación sencilla en **Node.js + TypeScript** que cada mañana consulta las licitaciones de la [Plataforma de Contratación del Sector Público](https://contrataciondelsectorpublico.gob.es), las filtra según tu configuración y te envía un correo HTML con las **nuevas** que cumplan los criterios.
 
@@ -34,7 +34,7 @@ cp .env.example .env   # editar con tus datos SMTP
 | `SMTP_SECURE`  | `true` para TLS implícito (puerto 465), `false` para STARTTLS      |
 | `SMTP_USER`    | Usuario SMTP                                                       |
 | `SMTP_PASS`    | Contraseña / contraseña de aplicación                              |
-| `EMAIL_FROM`   | Remitente, p. ej. `TenderWatch <no-reply@tudominio.com>`           |
+| `EMAIL_FROM`   | Remitente, p. ej. `Licitaciones <no-reply@tudominio.com>`           |
 | `EMAIL_TO`     | Destinatario                                                       |
 | `SCHEDULE`     | Expresión cron (por defecto `0 8 * * *` = cada día a las 08:00)    |
 
