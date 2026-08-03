@@ -158,6 +158,7 @@ function mapEntry(entry: Obj): Tender | null {
     budget: extractBudget(procurement),
     deadline,
     locations,
+    status,
     contractType: textContent(procurement?.["TypeCode"]) ?? null,
     publishedAt,
   };

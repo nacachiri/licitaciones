@@ -32,6 +32,8 @@ function cardTemplate(tender: Tender): string {
   const cpv = tender.cpv.length > 0 ? tender.cpv.join(", ") : "—";
   const deadline = tender.deadline ? formatDeadline(tender.deadline) : "—";
   const importe = formatBudget(tender.budget);
+  const statusLabel = tender.status === "PUB" ? "Publicada" : tender.status ?? "—";
+  const pubDate = tender.publishedAt ? formatDeadline(tender.publishedAt.slice(0, 10)) : "—";
 
   return `
   <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="width:100%;margin-bottom:12px;background-color:#ffffff;border:1px solid #e4e7eb;border-radius:8px;overflow:hidden;">
@@ -45,7 +47,12 @@ function cardTemplate(tender: Tender): string {
     </tr>
     <tr>
       <td style="padding:0 16px 12px;font-size:12px;color:#7b8794;line-height:1.4;">
-        CPV ${escapeHtml(cpv)} &middot; ${escapeHtml(importe)} &middot; ${escapeHtml(deadline)}
+        CPV ${escapeHtml(cpv)} &middot; ${escapeHtml(importe)} &middot; L&iacute;mite ${escapeHtml(deadline)}
+      </td>
+    </tr>
+    <tr>
+      <td style="padding:0 16px 12px;font-size:12px;color:#7b8794;line-height:1.4;">
+        Estado: <strong>${escapeHtml(statusLabel)}</strong> &middot; Publicada: ${escapeHtml(pubDate)}
       </td>
     </tr>
     <tr>

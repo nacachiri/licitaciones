@@ -11,6 +11,7 @@ export interface Tender {
   budget: number | null;
   deadline: string | null;
   locations: string[];
+  status: string | null;
   contractType: string | null;
   publishedAt: string | null;
 }
