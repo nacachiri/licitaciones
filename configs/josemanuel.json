@@ -47,7 +47,9 @@
     "regions": [],
     "provinces": [],
     "contractTypes": [],
-    "procedureTypes": [],
+    "procedureTypes": [
+        "Abierto"
+    ],
     "contractingAuthorities": [],
     "statuses": [],
     "since": null,
