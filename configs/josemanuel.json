@@ -46,6 +46,7 @@
     "maximumBudget": null,
     "regions": [],
     "provinces": [],
+    "excludeRegions": ["Ceuta", "Melilla", "Canarias"],
     "contractTypes": [],
     "procedureTypes": [
         "Abierto"

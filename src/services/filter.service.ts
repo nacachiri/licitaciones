@@ -64,6 +64,13 @@ function matchesLocation(list: string[], values: string[]): boolean {
   );
 }
 
+function notInExcluded(list: string[], values: string[]): boolean {
+  if (list.length === 0) return true;
+  return !values.some((value) =>
+    list.some((item) => value.toLocaleLowerCase().includes(item.toLocaleLowerCase())),
+  );
+}
+
 function matchesStatus(tender: Tender, statuses: string[]): boolean {
   if (statuses.length === 0) return tender.status === DEFAULT_STATUS;
   return statuses.some((s) => tender.status?.toUpperCase() === s.toUpperCase());
@@ -98,6 +105,7 @@ export class FilterService {
       if (!withinBudget(tender, config)) return false;
       if (!matchesLocation(config.provinces, tender.locations)) return false;
       if (!matchesLocation(config.regions, tender.locations)) return false;
+      if (!notInExcluded(config.excludeRegions, tender.locations)) return false;
       if (!matchesLocation(config.contractTypes, [tender.contractType ?? ""])) return false;
       if (!matchesProcedureType(config.procedureTypes, tender.procedureType)) return false;
       if (!matchesLocation(config.contractingAuthorities, [tender.agency])) return false;

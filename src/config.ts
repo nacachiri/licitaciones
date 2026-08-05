@@ -26,6 +26,7 @@ export interface Config {
   maximumBudget: number | null;
   regions: string[];
   provinces: string[];
+  excludeRegions: string[];
   contractTypes: string[];
   procedureTypes: string[];
   contractingAuthorities: string[];
@@ -61,6 +62,7 @@ export function loadConfig(): Config {
       maximumBudget: parsed.maximumBudget ?? null,
       regions: parsed.regions ?? [],
       provinces: parsed.provinces ?? [],
+      excludeRegions: parsed.excludeRegions ?? [],
       contractTypes: parsed.contractTypes ?? [],
       procedureTypes: parsed.procedureTypes ?? [],
       contractingAuthorities: parsed.contractingAuthorities ?? [],
