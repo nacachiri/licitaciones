@@ -86,9 +86,15 @@ export class FilterService {
 
       if (!matchesStatus(tender, config.statuses)) return false;
       if (!matchesSince(tender, config.since)) return false;
-      if (config.keywords.length > 0 && !matchesAny(config.keywords, title)) return false;
       if (matchesAny(config.excludeKeywords, title)) return false;
-      if (!matchesCpv(config.cpv, tender.cpv)) return false;
+
+      const hasKeywordFilter = config.keywords.length > 0;
+      const hasCpvFilter = config.cpv.length > 0;
+      if (hasKeywordFilter || hasCpvFilter) {
+        const keywordMatch = hasKeywordFilter && matchesAny(config.keywords, title);
+        const cpvMatch = hasCpvFilter && matchesCpv(config.cpv, tender.cpv);
+        if (!keywordMatch && !cpvMatch) return false;
+      }
       if (!withinBudget(tender, config)) return false;
       if (!matchesLocation(config.provinces, tender.locations)) return false;
       if (!matchesLocation(config.regions, tender.locations)) return false;
