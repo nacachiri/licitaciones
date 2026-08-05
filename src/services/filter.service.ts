@@ -96,10 +96,12 @@ export class FilterService {
       if (matchesAny(config.excludeKeywords, title)) return false;
 
       const hasKeywordFilter = config.keywords.length > 0;
-      const hasCpvFilter = config.cpv.length > 0;
+      const hasCpvFilter = config.cpv.length > 0 || config.cpvPrefixes.length > 0;
       if (hasKeywordFilter || hasCpvFilter) {
         const keywordMatch = hasKeywordFilter && matchesAny(config.keywords, title);
-        const cpvMatch = hasCpvFilter && matchesCpv(config.cpv, tender.cpv);
+        const cpvMatch = hasCpvFilter && (
+          matchesCpv(config.cpv, tender.cpv) || matchesCpv(config.cpvPrefixes, tender.cpv)
+        );
         if (!keywordMatch && !cpvMatch) return false;
       }
       if (!withinBudget(tender, config)) return false;

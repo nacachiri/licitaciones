@@ -20,6 +20,7 @@ export interface Tender {
 
 export interface Config {
   cpv: string[];
+  cpvPrefixes: string[];
   keywords: string[];
   excludeKeywords: string[];
   minimumBudget: number;
@@ -56,6 +57,7 @@ export function loadConfig(): Config {
     const parsed = JSON.parse(raw) as Partial<Config>;
     return {
       cpv: parsed.cpv ?? [],
+      cpvPrefixes: parsed.cpvPrefixes ?? [],
       keywords: parsed.keywords ?? [],
       excludeKeywords: parsed.excludeKeywords ?? [],
       minimumBudget: parsed.minimumBudget ?? 0,
